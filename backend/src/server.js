@@ -13,6 +13,19 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+app.get("/api/test", (req, res) => {
+  const backend = process.env.HOSTNAME;
+  const nginxHeader = req.headers["x-backend-instance"];
+
+  console.log("Handled by backend:", backend);
+
+  res.json({
+    message: "API response",
+    backendInstance: backend,
+    nginxForwardedInstance: nginxHeader,
+  });
+});
+
 app.get("/api/whoami", (req, res) => {
   res.json({
     hostname: os.hostname(),
